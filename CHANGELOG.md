@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.1.1](https://github.com/blue1st/chrome-extension-title-capture/compare/v1.1.0...v1.1.1) (2026-04-28)
+
 # [1.1.0](https://github.com/blue1st/chrome-extension-title-capture/compare/v1.0.2...v1.1.0) (2026-04-28)
 
 
