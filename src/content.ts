@@ -5,6 +5,8 @@ document.addEventListener('contextmenu', (event) => {
   const link = target.closest('a');
   if (link) {
     lastClickedLinkText = link.innerText.trim() || link.getAttribute('title') || '';
+  } else if (target instanceof HTMLImageElement) {
+    lastClickedLinkText = target.alt || target.title || '';
   } else {
     lastClickedLinkText = '';
   }
@@ -17,6 +19,11 @@ chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
     showCaptureMenu(finalTitle, url);
   }
 });
+
+function isImageUrl(url: string): boolean {
+  const imageExtensions = /\.(jpg|jpeg|png|gif|webp|svg|bmp|ico|avif)(\?.*)?$/i;
+  return imageExtensions.test(url) || url.startsWith('data:image/');
+}
 
 function showCaptureMenu(title: string, url: string) {
   // Prevent multiple menus
@@ -117,9 +124,16 @@ function showCaptureMenu(title: string, url: string) {
   const optionsContainer = document.createElement('div');
   optionsContainer.className = 'options';
 
+  const isImg = isImageUrl(url);
   const formats = [
-    { label: 'HTML Link', format: () => `<a href="${url}">${title}</a>` },
-    { label: 'Markdown', format: () => `[${title}](${url})` },
+    { 
+      label: isImg ? 'HTML Image' : 'HTML Link', 
+      format: () => isImg ? `<img src="${url}" alt="${title}">` : `<a href="${url}">${title}</a>` 
+    },
+    { 
+      label: isImg ? 'Markdown Image' : 'Markdown', 
+      format: () => isImg ? `![${title}](${url})` : `[${title}](${url})` 
+    },
     { label: 'Title Only', format: () => title },
     { label: 'URL Only', format: () => url },
   ];
