@@ -12,10 +12,8 @@
     }
   },
   "permissions": [
-    "tabs",
     "activeTab",
-    "contextMenus",
-    "scripting"
+    "contextMenus"
   ],
   "background": {
     "service_worker": "background.js",
