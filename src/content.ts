@@ -99,12 +99,33 @@ function showCaptureMenu(title: string, url: string) {
     button:active {
       transform: translateY(0);
     }
-    .shortcut {
-      font-size: 11px;
+    .preview-container {
+      margin-top: 20px;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.03);
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .preview-label {
+      font-size: 10px;
+      text-transform: uppercase;
       color: #86868b;
-      background: #f5f5f7;
-      padding: 2px 6px;
-      border-radius: 4px;
+      margin-bottom: 6px;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+    .preview-text {
+      font-size: 11px;
+      color: #1d1d1f;
+      word-break: break-all;
+      font-family: "SF Mono", "Monaco", "Inconsolata", monospace;
+      line-height: 1.4;
+      min-height: 1.4em;
     }
     .close-hint {
       margin-top: 16px;
@@ -124,6 +145,16 @@ function showCaptureMenu(title: string, url: string) {
   const optionsContainer = document.createElement('div');
   optionsContainer.className = 'options';
 
+  const previewContainer = document.createElement('div');
+  previewContainer.className = 'preview-container';
+  const previewLabel = document.createElement('div');
+  previewLabel.className = 'preview-label';
+  previewLabel.textContent = 'Preview';
+  const previewText = document.createElement('div');
+  previewText.className = 'preview-text';
+  previewContainer.appendChild(previewLabel);
+  previewContainer.appendChild(previewText);
+
   const isImg = isImageUrl(url);
   const formats = [
     { 
@@ -138,9 +169,15 @@ function showCaptureMenu(title: string, url: string) {
     { label: 'URL Only', format: () => url },
   ];
 
+  // Set default preview
+  previewText.textContent = formats[0].format();
+
   formats.forEach((f) => {
     const btn = document.createElement('button');
     btn.innerHTML = `<span>${f.label}</span>`;
+    btn.onmouseenter = () => {
+      previewText.textContent = f.format();
+    };
     btn.onclick = () => {
       copyToClipboard(f.format());
       container.remove();
@@ -150,6 +187,7 @@ function showCaptureMenu(title: string, url: string) {
   });
 
   modal.appendChild(optionsContainer);
+  modal.appendChild(previewContainer);
 
   const hint = document.createElement('div');
   hint.className = 'close-hint';
