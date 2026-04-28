@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Title Capture Pro",
   "description": "Capture and format tab titles and URLs with ease.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "action": {
     "default_icon": "icon.png"
   },
