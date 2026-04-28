@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Title Capture Pro",
+  "description": "Capture and format tab titles and URLs with ease.",
+  "version": "1.0.0",
+  "action": {
+    "default_icon": "icon.png"
+  },
+
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "contextMenus",
+    "scripting"
+  ],
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "128": "icon.png"
+  }
+}
+
+

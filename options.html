@@ -1,23 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title>Title Capture</title>
-		<script src="setting.js"></script>
-		<script src="options.js"></script>
-	</head>
-	<body style="background-color:#666">
-		<div>
-			<h2>変数</h2>
-			<p><code>${url}</code>: URL</p>
-			<p><code>${title}</code>: タイトル</p>
-			<p><code>${favIconUrl}</code>: アイコンのURL</p>
-		</div>
-		<div>
-			<textarea id="text-format" style="width:80%"></textarea>
-		</div>
-		<div>
-			<button id="btn-save">Save!</button>
-		</div>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings - Title Capture Pro</title>
+    <link rel="stylesheet" href="./src/style.css" />
+    <style>
+      body { width: 500px; padding: 32px; height: auto; }
+      .container { padding: 32px; gap: 24px; }
+      .setting-group { display: flex; flex-direction: column; gap: 8px; }
+      label { font-weight: 600; font-size: 0.9rem; color: var(--text); }
+      .hint { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+      code { background: rgba(255,255,255,0.1); padding: 2px 4px; border-radius: 4px; color: #818cf8; }
+      .actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 16px; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Settings</h1>
+        <p class="description">Customize your capture format</p>
+      </header>
+
+      <div class="setting-group">
+        <label for="pattern">Format Pattern</label>
+        <textarea id="pattern" placeholder='[${title}](${url})'></textarea>
+        <p class="hint">
+          Use the following placeholders:<br>
+          <code>${title}</code> - Tab title<br>
+          <code>${url}</code> - Tab URL<br>
+          <code>${favIconUrl}</code> - Favicon URL
+        </p>
+      </div>
+
+      <div class="actions">
+        <div id="status" class="toast">Saved!</div>
+        <button id="save-btn" class="btn-primary" style="width: auto;">Save Settings</button>
+      </div>
+    </div>
+    <script type="module" src="/src/options.ts"></script>
+  </body>
 </html>
