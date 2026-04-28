@@ -29,12 +29,15 @@ jobs:
 
       - name: Zip extension
         run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          FILENAME="title-capture-v${VERSION}.zip"
+          echo "ZIP_FILENAME=$FILENAME" >> $GITHUB_ENV
           cd dist
-          zip -r ../title-capture-v${GITHUB_REF_NAME#v}.zip .
+          zip -r "../$FILENAME" .
 
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: title-capture-v${GITHUB_REF_NAME#v}.zip
+          files: ${{ env.ZIP_FILENAME }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
